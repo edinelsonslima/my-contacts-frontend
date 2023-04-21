@@ -50,7 +50,7 @@ class HttpClient {
 
     if (!response.ok) throw new APIError(response, responseBody);
 
-    await delay(1500);
+    await delay(500);
 
     return responseBody;
   }
