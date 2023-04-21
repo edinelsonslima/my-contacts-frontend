@@ -1,7 +1,11 @@
 import styled, { css } from 'styled-components';
 
-export default styled.button`
+export const StyledButton = styled.button`
   ${({ theme, danger }) => css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   height: 52px;
   padding: 0 16px;
 
