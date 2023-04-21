@@ -32,8 +32,9 @@ export default styled.select`
   }
 
   &[disabled] {
-    background-color: ${theme.colors.gray[100]};
+    opacity: 1;
     border-color: ${theme.colors.gray[200]};
+    background-color: ${theme.colors.gray[100]};
     cursor: not-allowed;
   }
   `}
