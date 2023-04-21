@@ -29,6 +29,7 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
   const [inputs, dispatchInputs] = useReducer(reducerInputs, initialInputsState);
   const [erros, setError] = useErrors();
   const [categories, setCategories] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
   useEffect(() => {
@@ -76,19 +77,17 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    const {
-      name, email, phone, categoryId,
-    } = inputs;
+    setIsSubmitting(true);
 
-    onSubmit({
-      name, email, phone, categoryId,
-    });
+    onSubmit({ ...inputs })
+      .finally(setIsSubmitting);
   }
 
   return (
     <Form onSubmit={handleSubmit} noValidate>
       <FormGroup error={erros.name}>
         <Input
+          disabled={isSubmitting}
           isRequired
           name="name"
           type="text"
@@ -101,6 +100,7 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
 
       <FormGroup error={erros.email}>
         <Input
+          disabled={isSubmitting}
           name="email"
           type="email"
           placeholder="Email"
@@ -112,6 +112,7 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
 
       <FormGroup>
         <Input
+          disabled={isSubmitting}
           type="tel"
           name="phone"
           maxLength={15}
@@ -126,7 +127,7 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
           name="categoryId"
           value={inputs.categoryId}
           onChange={handleSelectChange}
-          disabled={isLoadingCategories}
+          disabled={isLoadingCategories || isSubmitting}
           data-option-empty={!inputs.categoryId}
         >
           <option value="">Sem categoria</option>
@@ -139,7 +140,13 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       </FormGroup>
 
       <ButtonContainer>
-        <Button type="submit" disabled={!isFormValid}>{buttonLabel}</Button>
+        <Button
+          type="submit"
+          disabled={!isFormValid}
+          isLoading={isSubmitting}
+        >
+          {buttonLabel}
+        </Button>
       </ButtonContainer>
     </Form>
   );

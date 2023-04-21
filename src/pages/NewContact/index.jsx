@@ -3,18 +3,20 @@ import PageHeader from '../../components/PageHeader';
 import contactsService from '../../services/contactsService';
 
 export default function NewContact() {
-  function handleSubmit(formData) {
-    const contact = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      category_id: formData.categoryId,
-    };
+  async function handleSubmit(formData) {
+    try {
+      const contact = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        category_id: formData.categoryId,
+      };
 
-    contactsService.createContact(contact)
-      .then(console.log)
-      .catch(() => alert('Ocorreu um erro ao cadastrar o contato. Tente novamente.'))
-      .finally();
+      const response = await contactsService.createContact(contact);
+      console.log(response);
+    } catch {
+      alert('Erro ao cadastrar contato');
+    }
   }
 
   return (
