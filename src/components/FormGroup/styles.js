@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   ${({ theme }) => css`
+
   & + & {
     margin-top: 16px;
   }
@@ -12,6 +13,16 @@ export const Container = styled.div`
 
     color: ${theme.colors.danger.main};
     font-size: 12px;
+  }
+
+  .form-item {
+    position: relative;
+
+    .loader {
+      position: absolute;
+      top: 18px;
+      right: 16px;
+    }
   }
   `}
 `;
