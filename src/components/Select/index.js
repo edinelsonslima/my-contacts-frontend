@@ -23,8 +23,18 @@ export default styled.select`
 
   appearance: none;
 
+  &[data-option-empty="true"] {
+    color: ${theme.colors.gray[200]};
+  }
+
   &:focus {
-    border-color: ${theme.colors.primary.main}
+    border-color: ${theme.colors.primary.main};
+  }
+
+  &[disabled] {
+    background-color: ${theme.colors.gray[100]};
+    border-color: ${theme.colors.gray[200]};
+    cursor: not-allowed;
   }
   `}
 `;
