@@ -1,10 +1,13 @@
-import { useEffect, useReducer, useState } from 'react';
+import {
+  forwardRef, useEffect, useReducer, useState, useImperativeHandle,
+} from 'react';
 import propTypes from 'prop-types';
 
 import isEmailValid from '../../utils/isEmailValid';
 import formatPhone from '../../utils/formatPhone';
 
 import useErrors from '../../hooks/useErrors';
+import useSafeAsyncState from '../../hooks/useSafeAsyncState';
 
 import FormGroup from '../FormGroup';
 import Input from '../Input';
@@ -25,12 +28,32 @@ const initialInputsState = {
   categoryId: '',
 };
 
-export default function ContactForm({ buttonLabel, onSubmit }) {
+// eslint-disable-next-line react/display-name
+const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [inputs, dispatchInputs] = useReducer(reducerInputs, initialInputsState);
   const [erros, setError] = useErrors();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useSafeAsyncState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [isLoadingCategories, setIsLoadingCategories] = useSafeAsyncState(true);
+
+  const isFormValid = (inputs.name && !Object.values(erros).some((err) => err));
+
+  useImperativeHandle(ref, () => ({
+    setFieldsValues: (contact) => Object
+      .keys(initialInputsState)
+      .forEach((name) => {
+        dispatchInputs({
+          name,
+          value: (name === 'phone'
+            ? formatPhone(contact[name])
+            : contact[name]) ?? '',
+        });
+      }),
+
+    resetFields: () => Object
+      .keys(initialInputsState)
+      .forEach((name) => dispatchInputs({ name, value: '' })),
+  }), []);
 
   useEffect(() => {
     setIsLoadingCategories(true);
@@ -38,9 +61,7 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       .then(setCategories)
       .catch(Error)
       .finally(setIsLoadingCategories);
-  }, []);
-
-  const isFormValid = (inputs.name && !Object.values(erros).some((err) => err));
+  }, [setCategories, setIsLoadingCategories]);
 
   function handleSelectChange(evt) {
     const { name, value } = evt.target;
@@ -75,12 +96,13 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
     dispatchInputs({ name, value: formattedPhone });
   }
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
     setIsSubmitting(true);
 
-    onSubmit({ ...inputs })
-      .finally(setIsSubmitting);
+    await onSubmit({ ...inputs });
+
+    setIsSubmitting(false);
   }
 
   return (
@@ -150,9 +172,11 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       </ButtonContainer>
     </Form>
   );
-}
+});
 
 ContactForm.propTypes = {
   buttonLabel: propTypes.string.isRequired,
   onSubmit: propTypes.func.isRequired,
 };
+
+export default ContactForm;
