@@ -1,6 +1,8 @@
 import APIError from '../../errors/APIError';
 import delay from '../../utils/delay';
 
+const NO_CONTENT_STATUS = 204;
+
 class HttpClient {
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
@@ -17,6 +19,21 @@ class HttpClient {
     return this.makeRequest(path, {
       method: 'POST',
       body: options?.body,
+      headers: options?.headers,
+    });
+  }
+
+  put(path, options) {
+    return this.makeRequest(path, {
+      method: 'PUT',
+      body: options?.body,
+      headers: options?.headers,
+    });
+  }
+
+  delete(path, options) {
+    return this.makeRequest(path, {
+      method: 'DELETE',
       headers: options?.headers,
     });
   }
@@ -42,15 +59,17 @@ class HttpClient {
 
     const contentType = response.headers.get('content-type');
 
-    if (!contentType?.includes('application/json')) {
+    await delay(500);
+
+    if (contentType && !contentType?.includes('application/json')) {
       throw new APIError(response);
     }
+
+    if (response.status === NO_CONTENT_STATUS) return null;
 
     const responseBody = await response.json();
 
     if (!response.ok) throw new APIError(response, responseBody);
-
-    await delay(500);
 
     return responseBody;
   }
