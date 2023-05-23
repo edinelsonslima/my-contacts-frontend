@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components';
 
 export const StyledButton = styled.button`
   ${({ theme, danger }) => css`
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,7 +35,7 @@ export const StyledButton = styled.button`
   }
 
   &:disabled {
-    background: #CCC;
+    background: #CCCCCCAA !important;
     cursor: not-allowed;
   }
 
@@ -50,5 +52,11 @@ export const StyledButton = styled.button`
   `}
 
   `}
+`;
 
+export const SpinnerWrapper = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
