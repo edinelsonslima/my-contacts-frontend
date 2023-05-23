@@ -8,7 +8,7 @@ import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 import Loader from '../../components/Loader';
 import ContactForm from '../../components/ContactForm';
 import PageHeader from '../../components/PageHeader';
-import contactsService from '../../services/contactsService';
+import ContactsService from '../../services/contactsService';
 
 export default function EditContact() {
   const params = useParams();
@@ -25,7 +25,7 @@ export default function EditContact() {
       try {
         setIsLoading(true);
 
-        const contact = await contactsService.getContactById(params.id);
+        const contact = await ContactsService.getContactById(params.id);
 
         safeAsyncAction(() => {
           const editedContact = {
@@ -53,16 +53,9 @@ export default function EditContact() {
     loaderContact();
   }, [history, params.id, safeAsyncAction]);
 
-  async function handleSubmit(formData) {
+  async function handleSubmit(contact) {
     try {
-      const contact = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        category_id: formData.categoryId,
-      };
-
-      const contactData = await contactsService.updateContact(params.id, contact);
+      const contactData = await ContactsService.updateContact(params.id, contact);
       setContactName(contactData.name);
 
       toast({
