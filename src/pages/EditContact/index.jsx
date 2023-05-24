@@ -28,14 +28,7 @@ export default function EditContact() {
         const contact = await ContactsService.getContactById(params.id);
 
         safeAsyncAction(() => {
-          const editedContact = {
-            name: contact.name,
-            email: contact.email,
-            phone: contact.phone,
-            categoryId: contact.category_id,
-          };
-
-          contactFormRef.current.setFieldsValues(editedContact);
+          contactFormRef.current.setFieldsValues(contact);
           setContactName(contact.name);
           setIsLoading(false);
         });
