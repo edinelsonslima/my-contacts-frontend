@@ -22,10 +22,7 @@ function reducerInputs(state, { name, value }) {
 }
 
 const initialInputsState = {
-  name: '',
-  email: '',
-  phone: '',
-  categoryId: '',
+  name: '', email: '', phone: '', categoryId: '',
 };
 
 // eslint-disable-next-line react/display-name
@@ -39,20 +36,19 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const isFormValid = (inputs.name && !Object.values(erros).some((err) => err));
 
   useImperativeHandle(ref, () => ({
-    setFieldsValues: (contact) => Object
-      .keys(initialInputsState)
-      .forEach((name) => {
-        dispatchInputs({
-          name,
-          value: (name === 'phone'
-            ? formatPhone(contact[name])
-            : contact[name]) ?? '',
-        });
-      }),
+    setFieldsValues: (contact) => ({
+      name: dispatchInputs({ name: 'name', value: contact.name }),
+      email: dispatchInputs({ name: 'email', value: contact.email }),
+      categoryId: dispatchInputs({ name: 'categoryId', value: contact.category.id }),
+      phone: dispatchInputs({ name: 'phone', value: formatPhone(contact.phone) }),
+    }),
 
-    resetFields: () => Object
-      .keys(initialInputsState)
-      .forEach((name) => dispatchInputs({ name, value: '' })),
+    resetFields: () => ({
+      name: dispatchInputs({ name: 'name', value: '' }),
+      email: dispatchInputs({ name: 'email', value: '' }),
+      phone: dispatchInputs({ name: 'phone', value: '' }),
+      categoryId: dispatchInputs({ name: 'categoryId', value: '' }),
+    }),
   }), []);
 
   useEffect(() => {
