@@ -1,15 +1,11 @@
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-one-expression-per-line */
 import { Link } from 'react-router-dom';
-import {
-  useCallback, useEffect, useMemo, useState,
-} from 'react';
 
 import Loader from '../../components/Loader';
 import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 
-import toast from '../../utils/toast';
+import useController from './useController';
 
 import IconArrow from '../../assets/images/icons/arrow.svg';
 import IconEdit from '../../assets/images/icons/edit.svg';
@@ -28,79 +24,25 @@ import {
   InputSearchContainer,
   SearchNotFoundContainer,
 } from './styles';
-import contactsService from '../../services/contactsService';
 
 export default function Home() {
-  const [contacts, setContacts] = useState([]);
-  const [orderBy, setOrderBy] = useState('asc');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
-  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-
-  const filteredContacts = useMemo(() => contacts?.filter((contact) => (
-    contact?.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )), [contacts, searchTerm]);
-
-  const loadContacts = useCallback(() => {
-    setHasError(false);
-    setIsLoading(true);
-
-    contactsService.listContacts(orderBy)
-      .then(setContacts)
-      .catch(setHasError)
-      .finally(setIsLoading);
-  }, [orderBy]);
-
-  useEffect(() => loadContacts(), [loadContacts]);
-
-  function handleToggleOrderBy() {
-    setOrderBy((prevOrderBy) => (prevOrderBy === 'asc' ? 'desc' : 'asc'));
-  }
-
-  function handleSearchTerm(event) {
-    setSearchTerm(event.target.value);
-  }
-
-  function handleDeleteContact(contact) {
-    setIsDeleteModalVisible(true);
-    setContactBeingDeleted(contact);
-  }
-
-  function handleDeleteCloseDeleteModal() {
-    setIsDeleteModalVisible(false);
-    setContactBeingDeleted(null);
-  }
-
-  async function handleConfirmDeleteContact() {
-    try {
-      setIsLoadingDelete(true);
-
-      await contactsService.deleteContact(contactBeingDeleted.id);
-
-      handleDeleteCloseDeleteModal();
-
-      setContacts((prevContacts) => (
-        prevContacts.filter((contact) => contact.id !== contactBeingDeleted.id)
-      ));
-
-      toast({
-        type: 'success',
-        title: 'Contato deletado com sucesso!',
-        text: `O contato ”${contactBeingDeleted?.name}” foi removido com sucesso!`,
-      });
-    } catch {
-      toast({
-        type: 'danger',
-        title: 'Ocorreu um erro ao deletar o contato!',
-        text: `O contato ”${contactBeingDeleted?.name}” não foi removido. Tente novamente mais tarde.`,
-      });
-    } finally {
-      setIsLoadingDelete(false);
-    }
-  }
+  const {
+    isLoading,
+    isLoadingDelete,
+    contactBeingDeleted,
+    isDeleteModalVisible,
+    handleDeleteCloseDeleteModal,
+    handleConfirmDeleteContact,
+    contacts,
+    searchTerm,
+    handleSearchTerm,
+    hasError,
+    filteredContacts,
+    loadContacts,
+    orderBy,
+    handleToggleOrderBy,
+    handleDeleteContact,
+  } = useController();
 
   return (
     <Container>
@@ -161,7 +103,11 @@ export default function Home() {
 
             <p>
               Você ainda não tem nenhum contato cadastrado!
-              Clique no botão <strong>”Novo contato”</strong> à cima
+              Clique no botão
+              {' '}
+              <strong>”Novo contato”</strong>
+              {' '}
+              à cima
               para cadastrar o seu primeiro!
             </p>
           </EmptyListContainer>
@@ -172,7 +118,14 @@ export default function Home() {
             <img src={IconMagnifierQuestion} alt="Lupa" />
 
             <span>
-              Nenhum resultado foi encontrado para <strong>”{searchTerm}”</strong>.
+              Nenhum resultado foi encontrado para
+              {' '}
+              <strong>
+                ”
+                {searchTerm}
+                ”
+              </strong>
+              .
             </span>
           </SearchNotFoundContainer>
         )}
