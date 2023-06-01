@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export default function useErrors() {
   const [erros, setErros] = useState({});
 
-  function setError({ field, message }) {
+  const setError = useCallback(({ field, message }) => {
     setErros((prevErros) => ({ ...prevErros, [field]: message }));
-  }
+  }, []);
 
   return [erros, setError];
 }
