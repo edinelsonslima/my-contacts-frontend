@@ -24,7 +24,10 @@ export default function useController() {
 
     contactsService.listContacts(orderBy)
       .then(setContacts)
-      .catch(setHasError)
+      .catch(() => {
+        setHasError(true);
+        setContacts([]);
+      })
       .finally(setIsLoading);
   }, [orderBy]);
 
