@@ -48,7 +48,6 @@ export default function useController() {
 
   function handleDeleteCloseDeleteModal() {
     setIsDeleteModalVisible(false);
-    setContactBeingDeleted(null);
   }
 
   async function handleConfirmDeleteContact() {
