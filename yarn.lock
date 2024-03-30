@@ -1465,6 +1465,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.2.0.tgz#2cbcf822bf3764c9658c4d2e568bd0c0cb748016"
   integrity sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==
 
+"@edinelsonslima/toast-notification@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@edinelsonslima/toast-notification/-/toast-notification-0.2.0.tgz#fe7d3686837971f674102cbb2dc0256d9afe5963"
+  integrity sha512-aDVOPFztP9QbJl8gUesIdrh1Bh5xglOM0BmbqBvJDmYjVSxUXNo6GtaoQfFMWf0wKeX+a8p9td6t/kzhgPZIWg==
+
 "@emotion/is-prop-valid@^1.1.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-1.2.0.tgz#7f2d35c97891669f7e276eb71c83376a5dc44c83"
