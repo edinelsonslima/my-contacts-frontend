@@ -1465,10 +1465,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.2.0.tgz#2cbcf822bf3764c9658c4d2e568bd0c0cb748016"
   integrity sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==
 
-"@edinelsonslima/toast-notification@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@edinelsonslima/toast-notification/-/toast-notification-0.2.0.tgz#fe7d3686837971f674102cbb2dc0256d9afe5963"
-  integrity sha512-aDVOPFztP9QbJl8gUesIdrh1Bh5xglOM0BmbqBvJDmYjVSxUXNo6GtaoQfFMWf0wKeX+a8p9td6t/kzhgPZIWg==
+"@edinelsonslima/toast-notification@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@edinelsonslima/toast-notification/-/toast-notification-0.2.1.tgz#e75c69545b414377941a389e10b2c0dc3b23a59a"
+  integrity sha512-qyMFLd/S1w+cvh0mE39tpMDrHvaZUXdwDnZ6apKOtJIh0C4bjTLaJDavDrGXHVrO5fHOOqGW1lH/9yYGygUkXA==
 
 "@emotion/is-prop-valid@^1.1.0":
   version "1.2.0"
