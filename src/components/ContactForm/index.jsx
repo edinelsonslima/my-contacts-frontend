@@ -1,12 +1,12 @@
-import { forwardRef } from 'react';
 import propTypes from 'prop-types';
+import { forwardRef } from 'react';
 
+import Button from '../Button';
 import FormGroup from '../FormGroup';
 import Input from '../Input';
 import Select from '../Select';
-import Button from '../Button';
 
-import { Form, ButtonContainer } from './styles';
+import { ButtonContainer, Form } from './styles';
 import useController from './useController';
 
 // eslint-disable-next-line react/display-name
@@ -72,7 +72,7 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
           disabled={isLoadingCategories || isSubmitting}
           data-option-empty={!inputs.categoryId}
         >
-          <option value="">Sem categoria</option>
+          <option value="Sem categoria">Sem categoria</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
