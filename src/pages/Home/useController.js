@@ -1,8 +1,8 @@
+import { toast } from '@edinelsonslima/toast-notification';
 import {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
 import contactsService from '../../services/contactsService';
-import toast from '../../utils/toast';
 
 export default function useController() {
   const [contacts, setContacts] = useState([]);
@@ -62,17 +62,9 @@ export default function useController() {
         prevContacts.filter((contact) => contact.id !== contactBeingDeleted.id)
       ));
 
-      toast({
-        type: 'success',
-        title: 'Contato deletado com sucesso!',
-        text: `O contato ”${contactBeingDeleted?.name}” foi removido com sucesso!`,
-      });
+      toast.success({ content: `O contato ”${contactBeingDeleted?.name}” foi removido com sucesso!` });
     } catch {
-      toast({
-        type: 'danger',
-        title: 'Ocorreu um erro ao deletar o contato!',
-        text: `O contato ”${contactBeingDeleted?.name}” não foi removido. Tente novamente mais tarde.`,
-      });
+      toast.error({ content: `O contato ”${contactBeingDeleted?.name}” não foi removido. Tente novamente mais tarde.` });
     } finally {
       setIsLoadingDelete(false);
     }

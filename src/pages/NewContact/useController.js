@@ -1,6 +1,6 @@
+import { toast } from '@edinelsonslima/toast-notification';
 import { useRef } from 'react';
 import contactsService from '../../services/contactsService';
-import toast from '../../utils/toast';
 
 export default function useController() {
   const contactFormRef = useRef(null);
@@ -11,15 +11,9 @@ export default function useController() {
 
       contactFormRef.current.resetFields();
 
-      toast({
-        type: 'success',
-        text: 'Contato cadastrado com sucesso!',
-      });
+      toast.success({ content: 'Contato cadastrado com sucesso!' });
     } catch {
-      toast({
-        text: 'Ocorreu um erro ao cadastrar o contato!',
-        type: 'danger',
-      });
+      toast.error({ content: 'Ocorreu um erro ao cadastrar o contato!' });
     }
   }
 

@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-
-import toast from '../../utils/toast';
+import { toast } from '@edinelsonslima/toast-notification';
+import { useEffect, useRef, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 
@@ -32,10 +31,7 @@ export default function Container({ children }) {
       } catch {
         safeAsyncAction(() => {
           history.push('/');
-          toast({
-            type: 'danger',
-            text: 'Contato não encontrado!',
-          });
+          toast.error({ content: 'Contato não encontrado!' });
         });
       }
     }
@@ -45,18 +41,15 @@ export default function Container({ children }) {
 
   async function handleSubmit(contact) {
     try {
-      const contactData = await ContactsService.updateContact(params.id, contact);
+      const contactData = await ContactsService.updateContact(
+        params.id,
+        contact,
+      );
       setContactName(contactData.name);
 
-      toast({
-        type: 'success',
-        text: 'Contato editado com sucesso!',
-      });
+      toast.success({ content: 'Contato editado com sucesso!' });
     } catch {
-      toast({
-        type: 'danger',
-        text: 'Ocorreu um erro ao editar o contato!',
-      });
+      toast.error({ content: 'Ocorreu um erro ao editar o contato!' });
     }
   }
 
