@@ -11,7 +11,7 @@ import isEmailValid from '../../utils/isEmailValid';
 import formatPhone from '../../utils/formatPhone';
 
 function reducerInputs(state, { name, value }) {
-  return { ...state, [name]: value };
+  return { ...state, [name]: value ?? '' };
 }
 
 const initialInputsState = {
