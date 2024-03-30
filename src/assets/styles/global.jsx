@@ -1,3 +1,4 @@
+import '@edinelsonslima/toast-notification/style.css';
 import { createGlobalStyle, css } from 'styled-components';
 
 export default createGlobalStyle`

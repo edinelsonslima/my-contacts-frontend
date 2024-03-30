@@ -8,16 +8,14 @@ import GlobalStyles from '../../assets/styles/global';
 import defaultTheme from '../../assets/styles/theme/default';
 
 import Routes from '../../Routes';
-import { Container } from './styles';
-
-import '@edinelsonslima/toast-notification/style.css';
+import { Container, ToastMessagesStyle } from './styles';
 
 function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={defaultTheme}>
         <GlobalStyles />
-        <ToastContainer />
+        <ToastContainer classNames={{ toastMessages: ToastMessagesStyle }} />
         <Container>
           <Header />
           <Routes />
