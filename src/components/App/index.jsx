@@ -15,7 +15,10 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={defaultTheme}>
         <GlobalStyles />
-        <ToastContainer classNames={{ toastMessages: ToastMessagesStyle }} />
+        <ToastContainer
+          classNames={{ toastMessages: ToastMessagesStyle }}
+          position="center-bottom"
+        />
         <Container>
           <Header />
           <Routes />
