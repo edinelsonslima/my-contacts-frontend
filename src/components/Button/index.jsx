@@ -1,27 +1,27 @@
 import propTypes from 'prop-types';
-import { StyledButton, SpinnerWrapper } from './styles';
 import Spinner from '../Spinner';
+import { SpinnerWrapper, StyledButton } from './styles';
 
 export default function Button({
   children,
-  type,
-  disabled,
-  isLoading,
-  danger,
+  type = 'button',
+  disabled = false,
+  isLoading = false,
+  danger = false,
   onClick,
 }) {
   return (
     <StyledButton
       type={type}
-      danger={danger}
+      $danger={danger}
       onClick={onClick}
       disabled={disabled || isLoading}
     >
       {children}
       {isLoading && (
-      <SpinnerWrapper>
-        <Spinner size={16} />
-      </SpinnerWrapper>
+        <SpinnerWrapper>
+          <Spinner size={16} />
+        </SpinnerWrapper>
       )}
     </StyledButton>
   );
@@ -34,12 +34,4 @@ Button.propTypes = {
   children: propTypes.node.isRequired,
   onClick: propTypes.func,
   type: propTypes.oneOf(['button', 'submit', 'reset']),
-};
-
-Button.defaultProps = {
-  type: 'button',
-  danger: false,
-  disabled: false,
-  isLoading: false,
-  onClick: undefined,
 };

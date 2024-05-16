@@ -11,7 +11,7 @@ const fadeOut = keyframes`
 `;
 
 export const Overlay = styled.div`
-  ${({ isLeaving }) => css`
+  ${({ $isLeaving }) => css`
   width: 100%;
   height: 100%;
 
@@ -25,6 +25,6 @@ export const Overlay = styled.div`
 
   animation: ${fadeIn} 0.3s;
 
-  ${isLeaving && css` animation: ${fadeOut} 0.2s; `}
+  ${$isLeaving && css` animation: ${fadeOut} 0.2s; `}
 `}
 `;

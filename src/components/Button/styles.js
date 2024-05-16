@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const StyledButton = styled.button`
-  ${({ theme, danger }) => css`
+  ${({ theme, $danger }) => css`
   position: relative;
 
   display: flex;
@@ -39,7 +39,7 @@ export const StyledButton = styled.button`
     cursor: not-allowed;
   }
 
-  ${danger && css`
+  ${$danger && css`
     background: ${theme.colors.danger.main};
 
     &:hover {

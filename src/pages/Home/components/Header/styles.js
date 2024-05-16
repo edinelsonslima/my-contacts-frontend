@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.header`
-${({ theme, justifyContent }) => css`
+${({ theme, $justifyContent }) => css`
 display: flex;
 align-items: center;
-justify-content: ${justifyContent};
+justify-content: ${$justifyContent};
 margin-top: 32px;
 
 border-bottom: 2px solid ${theme.colors.gray[100]};
