@@ -20,21 +20,34 @@ export default function useController() {
     contact?.name.toLowerCase().includes(deferredSearchTerm.toLowerCase())
   )), [contacts, deferredSearchTerm]);
 
-  const loadContacts = useCallback(() => {
+  const loadContacts = useCallback((signal) => {
     setHasError(false);
     setIsLoading(true);
 
     contactsService
-      .listContacts(orderBy)
-      .then(setContacts)
-      .catch(() => {
-        setHasError(true);
-        setContacts([]);
+      .listContacts(orderBy, signal)
+      .then((data) => {
+        setContacts(data);
+        setIsLoading(false);
       })
-      .finally(setIsLoading);
+      .catch((error) => {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+
+        setHasError(true);
+        setIsLoading(false);
+        setContacts([]);
+      });
   }, [orderBy]);
 
-  useEffect(() => loadContacts(), [loadContacts]);
+  useEffect(() => {
+    const controller = new AbortController();
+
+    loadContacts(controller.signal);
+
+    return () => {
+      controller.abort();
+    };
+  }, [loadContacts]);
 
   const handleToggleOrderBy = useCallback(() => {
     setOrderBy((prevOrderBy) => (prevOrderBy === 'asc' ? 'desc' : 'asc'));

@@ -7,8 +7,8 @@ import useSafeAsyncState from '../../hooks/useSafeAsyncState';
 
 import CategoriesService from '../../services/categoriesService';
 
-import isEmailValid from '../../utils/isEmailValid';
 import formatPhone from '../../utils/formatPhone';
+import isEmailValid from '../../utils/isEmailValid';
 
 function reducerInputs(state, { name, value }) {
   return { ...state, [name]: value ?? '' };
@@ -44,11 +44,17 @@ export default function useController({ onSubmit, ref }) {
   }), []);
 
   useEffect(() => {
+    const controller = new AbortController();
     setIsLoadingCategories(true);
-    CategoriesService.listCategories()
+
+    CategoriesService.listCategories(controller.signal)
       .then(setCategories)
       .catch(Error)
       .finally(setIsLoadingCategories);
+
+    return () => {
+      controller.abort();
+    };
   }, [setCategories, setIsLoadingCategories]);
 
   function handleSelectChange(evt) {
