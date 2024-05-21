@@ -30,11 +30,11 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
       <FormGroup error={erros.name}>
         <Input
           disabled={isSubmitting}
-          isRequired
+          required
           name="name"
           type="text"
           placeholder="Nome *"
-          error={erros.name}
+          $error={erros.name}
           value={inputs.name}
           onChange={handleNameChange}
         />
@@ -46,7 +46,7 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
           name="email"
           type="email"
           placeholder="Email"
-          error={erros.email}
+          $error={erros.email}
           value={inputs.email}
           onChange={handleEmailChange}
         />

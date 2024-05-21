@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
+import { memo } from 'react';
 import IconArrow from '../../../../assets/images/icons/arrow.svg';
 import IconEdit from '../../../../assets/images/icons/edit.svg';
 import IconTrash from '../../../../assets/images/icons/trash.svg';
 
 import { Card, ListHeader } from './styles';
 
-export default function ContactList({
+function ContactList({
   filteredContacts,
   orderBy,
   onToggleOrderBy,
@@ -16,7 +17,7 @@ export default function ContactList({
   return (
     <>
       {!!filteredContacts?.length && (
-      <ListHeader orderBy={orderBy}>
+      <ListHeader $orderBy={orderBy}>
         <button type="button" onClick={onToggleOrderBy}>
           <span>Nome</span>
           <img src={IconArrow} alt="Seta" />
@@ -27,7 +28,7 @@ export default function ContactList({
       {filteredContacts?.map((contact, i) => (
         <Card
           key={contact?.id}
-          timeAnimation={((i + 1) * 200) > 1500 ? 1500 : ((i + 1) * 200)}
+          $timeAnimation={((i + 1) * 200) > 1500 ? 1500 : ((i + 1) * 200)}
         >
           <div className="info">
             <div className="contact-name">
@@ -69,3 +70,5 @@ ContactList.propTypes = {
   onToggleOrderBy: propTypes.func.isRequired,
   onDeleteContact: propTypes.func.isRequired,
 };
+
+export default memo(ContactList);

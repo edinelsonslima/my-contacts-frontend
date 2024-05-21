@@ -21,7 +21,7 @@ const scaleOut = keyframes`
 `;
 
 export const Overlay = styled.div`
-  ${({ isLeaving }) => css`
+  ${({ $isLeaving }) => css`
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
 
@@ -37,13 +37,13 @@ export const Overlay = styled.div`
 
   animation: ${fadeIn} 0.3s ease-in-out;
 
-  ${isLeaving && css`animation: ${fadeOut} 0.2s forwards;`}
+  ${$isLeaving && css`animation: ${fadeOut} 0.2s forwards;`}
 
   `}
 `;
 
 export const Container = styled.div`
-  ${({ theme, danger, isLeaving }) => css`
+  ${({ theme, $danger, $isLeaving }) => css`
   background: #fff;
   border-radius: 4px;
   padding: 24px;
@@ -53,12 +53,12 @@ export const Container = styled.div`
 
   animation: ${scaleIn} 0.3s ease-in-out;
 
-  ${isLeaving && css` animation: ${scaleOut} 0.2s forwards;`}
+  ${$isLeaving && css` animation: ${scaleOut} 0.2s forwards;`}
 
 
   > h1 {
     font-size: 22px;
-    color: ${danger ? theme.colors.danger.main : theme.colors.gray[900]};
+    color: ${$danger ? theme.colors.danger.main : theme.colors.gray[900]};
   }
 
   .modal-body {

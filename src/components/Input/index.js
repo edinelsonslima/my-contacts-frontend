@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export default styled.input`
-  ${({ theme, error }) => css`
+  ${({ theme, $error }) => css`
   border: none;
   outline: none;
   height: 52px;
@@ -34,7 +34,7 @@ export default styled.input`
     color: ${theme.colors.gray[200]};
   }
 
-  ${error && css`
+  ${$error && css`
     color: ${theme.colors.danger.main};
     border-color: ${theme.colors.danger.main} !important;
   `}

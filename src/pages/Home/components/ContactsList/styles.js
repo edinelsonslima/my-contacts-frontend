@@ -13,7 +13,7 @@ to {
 `;
 
 export const ListHeader = styled.header`
-${({ theme, orderBy }) => css`
+${({ theme, $orderBy }) => css`
 margin-top: 24px;
 margin-bottom: 8px;
 
@@ -32,7 +32,7 @@ button{
 
   img {
     transition: transform 0.2s ease-in;
-    transform: ${orderBy === 'asc' ? 'rotate(-180deg)' : 'rotate(0deg)'};
+    transform: ${$orderBy === 'asc' ? 'rotate(-180deg)' : 'rotate(0deg)'};
   }
 }
 
@@ -40,7 +40,7 @@ button{
 `;
 
 export const Card = styled.div`
-${({ theme, timeAnimation }) => css`
+${({ theme, $timeAnimation }) => css`
 display: flex;
 align-items: center;
 justify-content: space-between;
@@ -52,7 +52,7 @@ padding: 16px;
 border-radius: 4px;
 
 animation: ${fadeInList} ease-in-out;
-animation-duration: ${timeAnimation}ms;
+animation-duration: ${$timeAnimation}ms;
 
 & + & {
   margin-top: 16px;
