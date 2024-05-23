@@ -1,6 +1,6 @@
 import { toast } from '@edinelsonslima/toast-notification';
 import { useEffect, useRef, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 
@@ -8,7 +8,7 @@ import ContactsService from '../../services/contactsService';
 
 export default function Container({ children }) {
   const params = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const contactFormRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +33,7 @@ export default function Container({ children }) {
 
         safeAsyncAction(() => {
           setIsLoading(false);
-          history.push('/');
+          navigate('/', { replace: true });
           toast.error({ content: 'Contato não encontrado!' });
         });
       });
@@ -41,7 +41,7 @@ export default function Container({ children }) {
     return () => {
       controller.abort();
     };
-  }, [history, params.id, safeAsyncAction]);
+  }, [navigate, params.id, safeAsyncAction]);
 
   async function handleSubmit(contact) {
     try {
